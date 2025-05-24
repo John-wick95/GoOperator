@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoOperator: Revolutionizing the Trucking Industry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GoOperator Color Scheme: "Crimson Steel" --- */
+        :root {
+            --color-primary-accent: #B30000; /* GoOperator Red */
+            --color-secondary-accent: #00BCD4; /* Electric Blue */
+            --color-main-bg: #0A0A0A; /* Deep Midnight */
+            --color-secondary-bg: #1F1F1F; /* Sophisticated Grey (for cards/panels) */
+            --color-text-primary: #E0E0E0; /* Clean Off-White (Primary text) */
+            --color-text-secondary: #B0B0B0; /* Lighter Grey (Secondary text) */
+            --color-subtle-details: #4A4A4A; /* Neutral Medium Grey (Borders, subtle elements) */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-main-bg);
+            color: var(--color-text-primary);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--color-primary-accent);
+        }
+        
+        .orbitron-bold { font-family: 'Orbitron', sans-serif; font-weight: 700; }
+        .orbitron-black { font-family: 'Orbitron', sans-serif; font-weight: 900; }
+
+        .card {
+            background-color: var(--color-secondary-bg);
+            border-radius: 0.75rem; /* 12px */
+            padding: 1.5rem; /* 24px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--color-subtle-details);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Default max-width, can be overridden by Tailwind classes like max-w-lg, max-w-xl */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Base height */
+            max-height: 400px; /* Max height */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 350px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .big-number {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 3rem; /* 48px */
+            line-height: 1;
+            color: var(--color-primary-accent);
+        }
+        @media (min-width: 768px) {
+            .big-number {
+                font-size: 4.5rem; /* 72px */
+            }
+        }
+        
+        .flow-step {
+            background-color: var(--color-subtle-details);
+            color: var(--color-text-primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 1px solid var(--color-primary-accent);
+        }
+        .flow-arrow {
+            color: var(--color-secondary-accent);
+            font-size: 2rem;
+            line-height: 1;
+            margin: 0 0.5rem;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(10, 10, 10, 0.85); /* var(--color-main-bg) with transparency */
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .sticky-nav a {
+            transition: color 0.3s ease;
+        }
+        .sticky-nav a:hover {
+            color: var(--color-primary-accent);
+        }
+        .section-title {
+            border-bottom: 2px solid var(--color-primary-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 
+        Infographic Plan & Narrative:
+        1. Hook/Introduction: The Trucking Crisis & The GoOperator Opportunity (Driver Shortage Stat).
+        2. Section 1: The Troubled Road - Current Industry Pain Points (Barriers to Entry, Operational Overload).
+        3. Section 2: GoOperator - Paving a New Way (Value Proposition, Target Audience, Simplified Process).
+        4. Section 3: Key GoOperator Innovations & Market Impact (Instant Payouts, Simplified Setup, Projected Growth).
+        5. Section 4: The Future of Freight - Powered by GoOperator (Tech Shift, GoOperator Strengths).
+        6. Conclusion: The Road Ahead.
+
+        Visualization Choices:
+        - Driver Shortage (Hook): Single Big Number. Goal: Inform. Method: HTML/CSS.
+        - Barriers to Entry (Section 1): Bar Chart. Goal: Compare. Library: Chart.js (Canvas).
+        - Operational Overload (Section 1): HTML/CSS Diagram. Goal: Organize. Method: HTML/CSS.
+        - Target Audience Segments (Section 2): Donut Chart. Goal: Compare composition. Library: Chart.js (Canvas).
+        - Simplified GoOperator Process (Section 2): HTML/CSS Flow Chart. Goal: Organize. Method: HTML/CSS.
+        - Instant Payouts, Simplified Setup (Section 3): Single Big Numbers. Goal: Inform. Method: HTML/CSS.
+        - Projected GoOperator Growth (Section 3): Line Chart. Goal: Change over time. Library: Chart.js (Canvas).
+        - GoOperator Strengths (Section 4): Radar Chart. Goal: Compare attributes. Library: Chart.js (Canvas).
+
+        NO SVG or Mermaid JS used. All charts via Chart.js (Canvas). Diagrams via HTML/CSS.
+        Color Palette: "Crimson Steel"
+    -->
+
+    <nav class="sticky-nav">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center space-x-4 md:space-x-8 text-sm md:text-base">
+                <a href="#intro" class="text-gray-300 hover:text-[var(--color-primary-accent)]">Intro</a>
+                <a href="#pain-points" class="text-gray-300 hover:text-[var(--color-primary-accent)]">Pain Points</a>
+                <a href="#solution" class="text-gray-300 hover:text-[var(--color-primary-accent)]">Solution</a>
+                <a href="#innovations" class="text-gray-300 hover:text-[var(--color-primary-accent)]">Innovations</a>
+                <a href="#future" class="text-gray-300 hover:text-[var(--color-primary-accent)]">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 md:py-16 space-y-16 md:space-y-24">
+
+        <section id="intro" class="text-center">
+            <h1 class="text-4xl md:text-6xl orbitron-black mb-4">The <span class="text-[var(--color-secondary-accent)]">Trucking Crisis</span> is Here. | By: 7 Piece</h1>
+            <p class="text-lg md:text-xl text-[var(--color-text-secondary)] mb-8 max-w-3xl mx-auto">The backbone of our economy faces unprecedented challenges. A critical driver shortage looms, threatening supply chains and economic stability. But with crisis comes opportunity.</p>
+            <div class="card max-w-md mx-auto">
+                <p class="text-xl md:text-2xl text-[var(--color-text-secondary)] mb-2">U.S. Truck Driver Shortage Projection by 2030:</p>
+                <div class="big-number">160,000+</div>
+                <p class="text-sm text-[var(--color-text-secondary)] mt-2">(Source: Industry Estimates)</p>
+            </div>
+            <p class="text-lg md:text-xl text-[var(--color-text-secondary)] mt-8 max-w-3xl mx-auto">Introducing <span class="orbitron-bold text-[var(--color-primary-accent)]">GoOperator</span>: The AI-powered platform revolutionizing freight, making trucking accessible, efficient, and profitable for everyone. We are the operation, you're just the operator.</p>
+        </section>
+
+        <section id="pain-points">
+            <h2 class="text-3xl md:text-4xl orbitron-bold text-center mb-12 section-title">The Troubled Road: Current Industry Pain Points</h2>
+            <p class="text-center text-lg text-[var(--color-text-secondary)] mb-12 max-w-3xl mx-auto">The path for today's truckers is riddled with obstacles. High entry costs, operational nightmares, and a lack of support create a challenging environment that contributes to the driver shortage.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="card">
+                    <h3 class="text-2xl orbitron-bold mb-4">Crippling Barriers to Entry</h3>
+                    <p class="text-[var(--color-text-secondary)] mb-6">Aspiring truckers face a steep climb. Significant financial investment and complex regulations make starting out incredibly difficult.</p>
+                    <div class="chart-container h-[300px] md:h-[350px] max-w-lg mx-auto">
+                        <canvas id="barriersChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-[var(--color-text-secondary)]">Illustrative data representing typical costs and complexities faced by new entrants.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-2xl orbitron-bold mb-4">The Grind of Operational Overload</h3>
+                    <p class="text-[var(--color-text-secondary)] mb-6">Daily operations are a maze of paperwork, fragmented systems, and communication breakdowns, leading to inefficiencies and burnout.</p>
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-semibold text-[var(--color-secondary-accent)]">Typical Traditional Workflow:</h4>
+                        <div class="flex flex-col items-center space-y-2">
+                            <div class="flow-step w-full md:w-3/4">Manual Load Search (Multiple Boards)</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">Broker Calls & Negotiation</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">Paperwork (BOLs, Logs)</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">Haul & Track Manually</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">Submit Invoices & Wait (Avg. 17+ Days for Pay)</div>
+                        </div>
+                        <p class="text-sm text-center mt-4 text-[var(--color-text-secondary)]">This complex process drains time and energy, contributing to driver frustration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution">
+            <h2 class="text-3xl md:text-4xl orbitron-bold text-center mb-12 section-title">GoOperator: Paving a New Way</h2>
+            <p class="text-center text-lg text-[var(--color-text-secondary)] mb-12 max-w-3xl mx-auto">GoOperator is not just another app; it's a fundamental shift. We provide a seamless, AI-powered operating system that simplifies every aspect of trucking, empowering a diverse range of operators.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="card">
+                    <h3 class="text-2xl orbitron-bold mb-4">Empowering All Operators</h3>
+                    <p class="text-[var(--color-text-secondary)] mb-6">Our platform is designed for everyone, from individuals renting their first truck to established fleet owners looking to scale efficiently.</p>
+                    <div class="chart-container h-[300px] md:h-[350px] max-w-md mx-auto">
+                        <canvas id="audienceChart"></canvas>
+                    </div>
+                     <p class="text-sm text-center mt-4 text-[var(--color-text-secondary)]">Illustrative target audience segments for GoOperator.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-2xl orbitron-bold mb-4">The GoOperator Advantage: Simplified Workflow</h3>
+                    <p class="text-[var(--color-text-secondary)] mb-6">We handle the complexities, so you can focus on what you do best: driving.</p>
+                    <div class="space-y-4">
+                         <h4 class="text-lg font-semibold text-[var(--color-secondary-accent)]">The GoOperator Workflow:</h4>
+                        <div class="flex flex-col items-center space-y-2">
+                            <div class="flow-step w-full md:w-3/4">Rent/Add Truck (In-App)</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">AI Smart Load Matching</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">Seamless Hauling & Digital Docs</div>
+                            <div class="flow-arrow text-2xl">↓</div>
+                            <div class="flow-step w-full md:w-3/4">Instant Payouts (Same Day)</div>
+                        </div>
+                        <p class="text-sm text-center mt-4 text-[var(--color-text-secondary)]">Efficiency and profitability, built-in.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="innovations">
+            <h2 class="text-3xl md:text-4xl orbitron-bold text-center mb-12 section-title">Key Innovations & Market Impact</h2>
+            <p class="text-center text-lg text-[var(--color-text-secondary)] mb-12 max-w-3xl mx-auto">GoOperator introduces game-changing features designed to directly address industry pain points and unlock new levels of efficiency and profitability for truckers.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="card text-center">
+                    <h3 class="text-xl orbitron-bold text-[var(--color-secondary-accent)] mb-2">Instant Payouts</h3>
+                    <div class="big-number text-5xl">24<span class="text-2xl align-top">HRS</span></div>
+                    <p class="text-[var(--color-text-secondary)] mt-2">Get paid the same day. No more waiting weeks for your hard-earned money.</p>
+                </div>
+                <div class="card text-center">
+                    <h3 class="text-xl orbitron-bold text-[var(--color-secondary-accent)] mb-2">Simplified Company Setup</h3>
+                    <div class="big-number text-5xl">10<span class="text-2xl align-top">MIN</span></div>
+                    <p class="text-[var(--color-text-secondary)] mt-2">Launch your trucking company via our AI wizard. Skip the FMCSA chaos.</p>
+                </div>
+                <div class="card text-center">
+                     <h3 class="text-xl orbitron-bold text-[var(--color-secondary-accent)] mb-2">AI-Powered Efficiency</h3>
+                    <div class="text-[var(--color-primary-accent)] text-5xl orbitron-black">AI</div>
+                    <p class="text-[var(--color-text-secondary)] mt-2">Smart load matching, route optimization, and compliance assistance.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="text-2xl orbitron-bold mb-4 text-center">Projected Growth: Powered by GoOperator</h3>
+                <p class="text-[var(--color-text-secondary)] mb-6 text-center">By lowering barriers and increasing efficiency, GoOperator aims to significantly contribute to alleviating the driver shortage and empowering a new wave of trucking entrepreneurs.</p>
+                <div class="chart-container h-[350px] md:h-[400px] max-w-2xl mx-auto">
+                    <canvas id="growthChart"></canvas>
+                </div>
+                <p class="text-sm text-center mt-4 text-[var(--color-text-secondary)]">Illustrative projection of GoOperator platform adoption (users/companies powered).</p>
+            </div>
+        </section>
+
+        <section id="future">
+            <h2 class="text-3xl md:text-4xl orbitron-bold text-center mb-12 section-title">The Future of Freight: Powered by GoOperator</h2>
+            <p class="text-center text-lg text-[var(--color-text-secondary)] mb-12 max-w-3xl mx-auto">The trucking industry is at a technological inflection point. GoOperator is leading the charge, building the operating system for the next generation of freight movement, including seamless integration with advancements like the Tesla Semi.</p>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                <div class="md:col-span-2 card">
+                    <h3 class="text-2xl orbitron-bold mb-4">Our Core Strengths</h3>
+                    <ul class="list-disc list-inside space-y-2 text-[var(--color-text-secondary)]">
+                        <li><span class="font-semibold text-[var(--color-text-primary)]">Unmatched Accessibility:</span> Easy entry for all.</li>
+                        <li><span class="font-semibold text-[var(--color-text-primary)]">Peak Efficiency:</span> AI-driven optimization.</li>
+                        <li><span class="font-semibold text-[var(--color-text-primary)]">Enhanced Profitability:</span> Instant pay, better loads.</li>
+                        <li><span class="font-semibold text-[var(--color-text-primary)]">Radical Simplicity:</span> Intuitive, all-in-one platform.</li>
+                        <li><span class="font-semibold text-[var(--color-text-primary)]">Supported Growth:</span> Tools to scale your business.</li>
+                    </ul>
+                     <p class="text-sm mt-4 text-[var(--color-text-secondary)]">GoOperator is designed to empower operators at every stage of their journey.</p>
+                </div>
+                <div class="md:col-span-3 card">
+                    <h3 class="text-2xl orbitron-bold mb-4 text-center">GoOperator Advantage Matrix</h3>
+                    <div class="chart-container h-[350px] md:h-[400px] max-w-lg mx-auto">
+                        <canvas id="strengthsRadarChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-[var(--color-text-secondary)]">Illustrative representation of GoOperator's key strengths.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="text-center py-12 border-t border-[var(--color-subtle-details)]">
+            <h2 class="text-3xl md:text-4xl orbitron-bold mb-6">The Road Ahead is <span class="text-[var(--color-secondary-accent)]">Clear</span>.</h2>
+            <p class="text-lg md:text-xl text-[var(--color-text-secondary)] mb-8 max-w-3xl mx-auto">GoOperator is more than a platform; it's a movement. We are committed to transforming the trucking industry, making it more accessible, efficient, and rewarding for everyone involved. The future of freight is seamless, intelligent, and powered by GoOperator.</p>
+            <p class="orbitron-bold text-xl text-[var(--color-primary-accent)]">GoOperator: We are the operation, you're just the operator!</p>
+        </section>
+    </div>
+
+    <script>
+        const primaryAccent = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-accent').trim();
+        const secondaryAccent = getComputedStyle(document.documentElement).getPropertyValue('--color-secondary-accent').trim();
+        const textPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-text-primary').trim();
+        const textSecondary = getComputedStyle(document.documentElement).getPropertyValue('--color-text-secondary').trim();
+
+        function wrapLabel(str, maxWidth) {
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            const words = str.split(' ');
+            let currentLine = '';
+            const lines = [];
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+        
+        const defaultChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textPrimary,
+                        font: { family: 'Inter', size: 12 }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,10,0.9)',
+                    titleColor: primaryAccent,
+                    bodyColor: textPrimary,
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: textSecondary, font: { family: 'Inter' } },
+                    grid: { color: 'rgba(74, 74, 74, 0.3)' } /* var(--color-subtle-details) with alpha */
+                },
+                x: {
+                    ticks: { color: textSecondary, font: { family: 'Inter' } },
+                    grid: { color: 'rgba(74, 74, 74, 0.3)' }
+                }
+            }
+        };
+
+        // Barriers to Entry Chart (Bar Chart)
+        const barriersCtx = document.getElementById('barriersChart').getContext('2d');
+        new Chart(barriersCtx, {
+            type: 'bar',
+            data: {
+                labels: [wrapLabel('Truck Purchase Cost ($)', 16), wrapLabel('Initial Company Setup ($)', 16), wrapLabel('Regulatory Complexity', 16), wrapLabel('Operational Paperwork (Hours/Week)', 16)],
+                datasets: [{
+                    label: 'Barrier Magnitude (Illustrative)',
+                    data: [100, 60, 85, 70], // Normalized values for illustration
+                    backgroundColor: [primaryAccent, secondaryAccent, primaryAccent, secondaryAccent],
+                    borderColor: [primaryAccent, secondaryAccent, primaryAccent, secondaryAccent],
+                    borderWidth: 1
+                }]
+            },
+            options: { ...defaultChartOptions, indexAxis: 'y' }
+        });
+
+        // Target Audience Chart (Donut Chart)
+        const audienceCtx = document.getElementById('audienceChart').getContext('2d');
+        new Chart(audienceCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Renters', 'Solo Operators', wrapLabel('Fleet Operators', 16), wrapLabel('Fleet Drivers', 16)],
+                datasets: [{
+                    label: 'GoOperator Target Audience',
+                    data: [30, 25, 20, 25], // Percentages
+                    backgroundColor: [primaryAccent, secondaryAccent, '#FF6384', '#36A2EB'],
+                    hoverOffset: 4
+                }]
+            },
+            options: { ...defaultChartOptions, plugins: {...defaultChartOptions.plugins, legend: {...defaultChartOptions.plugins.legend, position: 'bottom'}}}
+        });
+
+        // Projected Growth Chart (Line Chart)
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Powered Companies/Operators',
+                    data: [500, 2500, 8000, 20000, 50000], // Illustrative numbers
+                    borderColor: primaryAccent,
+                    backgroundColor: 'rgba(179, 0, 0, 0.2)', /* primaryAccent with alpha */
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: defaultChartOptions
+        });
+        
+        // Strengths Radar Chart
+        const strengthsCtx = document.getElementById('strengthsRadarChart').getContext('2d');
+        new Chart(strengthsCtx, {
+            type: 'radar',
+            data: {
+                labels: [wrapLabel('Accessibility',16), wrapLabel('Efficiency',16), wrapLabel('Profitability',16), wrapLabel('Simplicity',16), wrapLabel('Growth Support',16)],
+                datasets: [{
+                    label: 'GoOperator Strengths',
+                    data: [90, 95, 85, 92, 88], // Scores out of 100
+                    fill: true,
+                    backgroundColor: 'rgba(179, 0, 0, 0.3)', /* primaryAccent with alpha */
+                    borderColor: primaryAccent,
+                    pointBackgroundColor: primaryAccent,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: primaryAccent
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(74, 74, 74, 0.5)' }, /* var(--color-subtle-details) with alpha */
+                        grid: { color: 'rgba(74, 74, 74, 0.5)' },
+                        pointLabels: { 
+                            color: textPrimary, 
+                            font: { family: 'Inter', size: 11 }
+                        },
+                        ticks: {
+                            color: textSecondary,
+                            backdropColor: 'transparent', // Or var(--color-secondary-bg)
+                            font: { family: 'Inter', size: 10 }
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
