@@ -1,3 +1,4 @@
+/* Reset and Center */
 * {
     margin: 0;
     padding: 0;
@@ -5,112 +6,100 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
     display: flex;
     justify-content: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e1e1e, #2c2c2c); /* Dark background for contrast */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .container {
-    max-width: 600px;
-    width: 100%;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-}
-
-.load-list {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    padding: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
-.load-card {
-    background: linear-gradient(135deg, #ffffff, #e8ecef);
+/* Liquid Glass Button */
+.liquid-glass-button {
+    position: relative;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent base */
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    backdrop-filter: blur(10px) saturate(180%); /* Glassmorphism blur */
+    -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3);
     cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.load-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+/* Liquid Gradient Overlay */
+.liquid-glass-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(29, 185, 255, 0.3),
+        rgba(255, 105, 180, 0.3),
+        rgba(255, 255, 255, 0.1)
+    );
+    transition: all 0.5s ease;
 }
 
-.load-card h3 {
-    color: #2c3e50;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
+/* Hover Effect */
+.liquid-glass-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 3px rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
 }
 
-.load-card p {
-    color: #555;
-    font-size: 0.95rem;
+.liquid-glass-button:hover::before {
+    left: 0;
 }
 
-.load-card .details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+/* Active Effect */
+.liquid-glass-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.load-card .details span {
-    font-weight: bold;
-    color: #3498db;
+/* Optional Ripple Effect on Click */
+.liquid-glass-button.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ripple 0.6s ease-out;
 }
 
-.load-card .rate-per-mile {
-    font-size: 1rem;
-    color: #27ae60;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Scrollbar Styling */
-.load-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.load-list::-webkit-scrollbar-thumb {
-    background-color: #3498db;
-    border-radius: 10px;
-}
-
-.load-list::-webkit-scrollbar-track {
-    background: #e0e0e0;
-}
-
-/* Responsive Design */
-@media (max-width: 400px) {
-    .container {
-        padding: 10px;
+@keyframes ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
     }
-
-    .load-card {
-        padding: 15px;
-    }
-
-    .load-card h3 {
-        font-size: 1rem;
-    }
-
-    .load-card p {
-        font-size: 0.85rem;
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
     }
 }
