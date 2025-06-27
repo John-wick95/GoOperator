@@ -1,4 +1,4 @@
-document.querySelector('.liquid-glass-button').addEventListener('click', function(e) {
+document.querySelector('.book-button').addEventListener('click', function(e) {
     const button = this;
     button.classList.add('ripple');
     setTimeout(() => {

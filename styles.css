@@ -1,4 +1,4 @@
-/* Reset and Center */
+/* Reset and Setup */
 * {
     margin: 0;
     padding: 0;
@@ -9,40 +9,37 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #1e1e1e, #2c2c2c); /* Dark background for contrast */
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a, #2e2e2e); /* Dark Apple-like background */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #ffffff;
 }
 
 .container {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
-/* Liquid Glass Button */
-.liquid-glass-button {
+/* Load Selection Card */
+.load-card {
     position: relative;
-    padding: 14px 28px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1); /* Semi-transparent base */
+    width: 100%;
+    max-width: 400px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.1); /* Translucent glass */
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    backdrop-filter: blur(10px) saturate(180%); /* Glassmorphism blur */
-    -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-    cursor: pointer;
+    border-radius: 16px;
+    backdrop-filter: blur(12px) saturate(180%); /* Glassmorphism */
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.3);
     overflow: hidden;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Liquid Gradient Overlay */
-.liquid-glass-button::before {
+.load-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -51,34 +48,85 @@ body {
     height: 100%;
     background: linear-gradient(
         45deg,
-        rgba(255, 255, 255, 0.1),
-        rgba(29, 185, 255, 0.3),
-        rgba(255, 105, 180, 0.3),
-        rgba(255, 255, 255, 0.1)
+        rgba(29, 185, 255, 0.2), /* Soft blue */
+        rgba(175, 82, 222, 0.2), /* Apple purple */
+        rgba(255, 105, 180, 0.2), /* Pink */
+        rgba(29, 185, 255, 0.2)
     );
-    transition: all 0.5s ease;
+    transition: left 0.5s ease;
 }
 
-/* Hover Effect */
-.liquid-glass-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 3px rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.15);
+/* Hover Effect for Card */
+.load-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
-.liquid-glass-button:hover::before {
+.load-card:hover::before {
     left: 0;
 }
 
-/* Active Effect */
-.liquid-glass-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.2);
+/* Load Details Styling */
+.load-details {
+    position: relative;
+    z-index: 1;
 }
 
-/* Optional Ripple Effect on Click */
-.liquid-glass-button.ripple::after {
+.load-details h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    background: linear-gradient(45deg, #1DB9FF, #AF52DE); /* Apple gradient text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.load-details .price {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.load-details .rate {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Book Button */
+.book-button {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.book-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.book-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Ripple Effect for Button */
+.book-button.ripple::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -98,8 +146,29 @@ body {
         opacity: 0.5;
     }
     100% {
-        width: 200px;
-        height: 200px;
+        width: 150px;
+        height:合金150px;
         opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .load-card {
+        padding: 16px;
+        max-width: 90%;
+    }
+
+    .load-details h2 {
+        font-size: 20px;
+    }
+
+    .load-details .price {
+        font-size24px;
+    }
+
+    .book-button {
+        padding: 10px 20px;
+        font-size: 14px;
     }
 }
