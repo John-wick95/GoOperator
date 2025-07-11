@@ -1,191 +1,431 @@
-/* Reset and Setup */
-* {
+/* --- Global Configuration Variables --- */
+:root {
+    --primary-color: #6a00ff; /* Deep Violet */
+    --secondary-color: #e0b0ff; /* Light Lilac */
+    --accent-color: #00bcd4;   /* Cyan */
+    --background-gradient-start: #1a003f; /* Dark Purple */
+    --background-gradient-end: #0a001f;   /* Even Darker Purple */
+    --glass-background: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color-light: #f0f0f0;
+    --text-color-dark: #333;
+    --border-radius-large: 2rem;
+    --border-radius-small: 0.75rem;
+    --spacing-unit: 1rem; /* Base spacing unit */
+    --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --header-height: 5rem;
+    --bottom-nav-height: 4rem;
+
+    /* Complexification variables */
+    --component-shadow-intensity: 0.15;
+    --panel-border-thickness: 1px;
+    --panel-padding-multiplier: 1.5;
+    --animation-duration-fast: 0.3s;
+    --animation-duration-medium: 0.6s;
+    --animation-easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Ease Out Quad */
+}
+
+/* --- Core Resets & Body Styles --- */
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px; /* Base font size for rem calculations */
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: var(--font-family-system);
+    line-height: 1.6;
+    color: var(--text-color-light);
+    background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
     min-height: 100vh;
-    background: linear-gradient(135deg, #0f0f1a, #1e1e2e); /* Deeper, richer background */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #ffffff;
-}
-
-.container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    overflow: hidden; /* Hide overflow for liquid effects */
+    position: relative;
+    user-select: none; /* iOS-like feel */
 }
 
-/* Load Selection Card */
-.load-card {
-    position: relative;
+/* --- App Container & Layout --- */
+#app-container {
     width: 100%;
-    max-width: 400px;
-    padding: 24px;
-    background: rgba(255, 255, 255, 0.12); /* Slightly more opaque for vibrancy */
-    border: 1.5px solid rgba(255, 255, 255, 0.3); /* Stronger border highlight */
-    border-radius: 18px;
-    backdrop-filter: blur(15px) saturate(200%); /* Enhanced blur and saturation */
-    -webkit-backdrop-filter: blur(15px) saturate(200%);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 
-                inset 0 1px 3px rgba(255, 255, 255, 0.5), /* Reflective highlight */
-                0 0 20px rgba(0, 122, 255, 0.2); /* Subtle blue glow */
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Vibrant Liquid Gradient Overlay */
-.load-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 200%;
+    max-width: 400px; /* iPhone-like width */
     height: 100%;
-    background: linear-gradient(
-        45deg,
-        rgba(0, 122, 255, 0.3), /* Vibrant Apple blue */
-        rgba(175, 82, 222, 0.3), /* Rich purple */
-        rgba(255, 45, 85, 0.3), /* Bold pink */
-        rgba(0, 212, 255, 0.3), /* Aqua */
-        rgba(0, 122, 255, 0.3)
-    );
-    transition: left 0.6s ease;
-    animation: flow 4s infinite alternate; /* Subtle flow animation */
-}
-
-/* Flow Animation for Liquid Effect */
-@keyframes flow {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(50%); }
-}
-
-/* Hover Effect for Card */
-.load-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 
-                inset 0 1px 4px rgba(255, 255, 255, 0.6),
-                0 0 30px rgba(0, 122, 255, 0.3); /* Enhanced glow */
-}
-
-.load-card:hover::before {
-    left: 0;
-}
-
-/* Load Details Styling */
-.load-details {
+    max-height: 800px; /* iPhone-like height */
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.5); /* Deep shadow for iOS device feel */
     position: relative;
-    z-index: 1;
+    z-index: 10; /* Ensure it's above background effects */
 }
 
-.load-details h2 {
-    font-size: 24px;
+/* --- Glass Effect Base Class --- */
+.glass-layer {
+    background: var(--glass-background);
+    border: var(--panel-border-thickness) solid var(--glass-border);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%); /* Safari support */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, var(--component-shadow-intensity));
+    transition: all var(--animation-duration-fast) var(--animation-easing-smooth);
+}
+
+/* --- Header Bar --- */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.05); /* Slightly darker glass for header */
+    border-bottom: var(--panel-border-thickness) solid var(--glass-border);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 20; /* Above main content */
+}
+
+.app-title {
+    font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    background: linear-gradient(45deg, #007AFF, #FF2D55, #00D4FF); /* Vibrant text gradient */
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--text-color-light);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.load-details .price {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Subtle depth */
+.icon-button {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-color-light);
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity var(--animation-duration-fast) ease-out;
 }
 
-.load-details .rate {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.8);
+.icon-button:hover {
+    opacity: 1;
+}
+
+/* Placeholder for actual icons (e.g., SVG or Font Awesome) */
+.menu-icon::before { content: '☰'; }
+.profile-icon::before { content: '👤'; }
+
+
+/* --- Main Content Area --- */
+.main-content {
+    flex-grow: 1;
+    padding: calc(var(--spacing-unit) * 1.5);
+    overflow-y: auto; /* Scrollable content */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    position: relative;
+    z-index: 15;
+}
+
+/* --- Glass Panels (Booking Module, Results) --- */
+.glass-panel {
+    background: var(--glass-background);
+    border: var(--panel-border-thickness) solid var(--glass-border);
+    border-radius: var(--border-radius-small);
+    padding: calc(var(--spacing-unit) * var(--panel-padding-multiplier));
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    backdrop-filter: blur(15px) saturate(150%);
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, var(--component-shadow-intensity) * 1.5);
+    transition: transform var(--animation-duration-medium) var(--animation-easing-smooth), box-shadow var(--animation-duration-medium) var(--animation-easing-smooth);
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, var(--component-shadow-intensity) * 2);
+}
+
+.panel-title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-unit);
+    color: var(--secondary-color);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Input Groups --- */
+.input-group {
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-color-light);
+    opacity: 0.8;
+}
+
+.input-group input[type="text"],
+.input-group input[type="date"],
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: var(--panel-border-thickness) solid var(--glass-border);
+    border-radius: var(--border-radius-small);
+    background: rgba(255, 255, 255, 0.08); /* Slightly more opaque glass for inputs */
+    color: var(--text-color-light);
+    font-family: var(--font-family-system);
+    font-size: 1rem;
+    transition: border-color var(--animation-duration-fast) ease-in-out, background-color var(--animation-duration-fast) ease-in-out;
+}
+
+.input-group input::placeholder {
+    color: var(--text-color-light);
+    opacity: 0.5;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color), 0.3);
+}
+
+/* --- Action Button --- */
+.action-button {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-small);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1.5rem rgba(var(--primary-color), 0.3);
+    transition: all var(--animation-duration-medium) var(--animation-easing-smooth);
+    letter-spacing: 0.05rem;
+    margin-top: var(--spacing-unit);
+}
+
+.action-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0.75rem 2rem rgba(var(--primary-color), 0.5);
+}
+
+.action-button:active {
+    transform: translateY(0);
+    box-shadow: 0 0.25rem 0.5rem rgba(var(--primary-color), 0.3);
+}
+
+/* --- Result Display --- */
+.results-display {
+    min-height: 10rem; /* Give it some space */
+}
+
+.results-panel {
+    min-height: 15rem; /* Ensure visibility even if no results */
+    display: flex;
+    flex-direction: column;
+}
+
+.result-list {
+    list-style: none;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem; /* For scrollbar */
+}
+
+.result-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-small);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border: var(--panel-border-thickness) solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background var(--animation-duration-fast) ease-in-out;
+}
+
+.result-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.result-item span {
+    font-size: 0.95rem;
+}
+
+.result-item .price {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.status-message {
+    margin-top: var(--spacing-unit);
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    text-align: center;
     opacity: 0.9;
 }
 
-/* Book Button */
-.book-button {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-    background: linear-gradient(45deg, rgba(0, 122, 255, 0.4), rgba(175, 82, 222, 0.4)); /* Gradient button */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 
-                inset 0 1px 2px rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* --- Bottom Navigation --- */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: var(--bottom-nav-height);
+    border-top: var(--panel-border-thickness) solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 -0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 20;
 }
 
-.book-button:hover {
-    background: linear-gradient(45deg, rgba(0, 122, 255, 0.6), rgba(175, 82, 222, 0.6));
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 
-                0 0 15px rgba(0, 122, 255, 0.4); /* Button glow */
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-size: 0.7rem;
+    opacity: 0.7;
+    transition: opacity var(--animation-duration-fast) ease-in-out, transform var(--animation-duration-fast) ease-in-out;
+    padding: 0.5rem;
 }
 
-.book-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+.nav-item::before { /* Placeholder for icons */
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
 }
 
-/* Ripple Effect for Button */
-.book-button.ripple::after {
+.nav-item:nth-child(1)::before { content: '🏠'; } /* Home */
+.nav-item:nth-child(2)::before { content: '🗓️'; } /* Bookings */
+.nav-item:nth-child(3)::before { content: '⚙️'; } /* Settings */
+.nav-item:nth-child(4)::before { content: '❓'; } /* Help */
+
+.nav-item.active {
+    opacity: 1;
+    color: var(--accent-color);
+    transform: scale(1.1);
+    text-shadow: 0 0 5px rgba(var(--accent-color), 0.5);
+}
+
+.nav-item:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+/* --- Utility Classes & Animations --- */
+.hidden {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseEffect {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.02); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-in {
+    animation: fadeIn var(--animation-duration-medium) var(--animation-easing-smooth) forwards;
+}
+
+/* --- "Liquid Glass" Background Particles / Shaders (Simulated) --- */
+/* This is where we create the illusion of complexity and movement */
+body::before, body::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: ripple 0.6s ease-out;
+    filter: blur(50px); /* For the glow effect */
+    opacity: 0.6;
+    z-index: 1;
 }
 
-@keyframes ripple {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 0.5;
-    }
-    100% {
-        width: 150px;
-        height: 150px;
-        opacity: 0;
-    }
+body::before {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    top: 10%;
+    left: 5%;
+    animation: floatOne 15s infinite ease-in-out alternate;
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-    .load-card {
-        padding: 16px;
-        max-width: 90%;
-    }
+body::after {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+    bottom: 5%;
+    right: 10%;
+    animation: floatTwo 18s infinite ease-in-out alternate-reverse;
+}
 
-    .load-details h2 {
-        font-size: 20px;
-    }
+@keyframes floatOne {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(50px, 80px); }
+    100% { transform: translate(0, 0); }
+}
 
-    .load-details .price {
-        font-size: 24px;
-    }
+@keyframes floatTwo {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-70px, -40px); }
+    100% { transform: translate(0, 0); }
+}
 
-    .book-button {
-        padding: 10px 20px;
-        font-size: 14px;
+/* --- Super Duper Complex Code Simulation (CSS only) --- */
+/* Arbitrary nesting, unused classes, and redundant declarations for visual complexity */
+.app-container > .header-bar .app-title[data-role="main-heading"] {
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.booking-module > .glass-panel.search-panel > .input-group:nth-child(odd) > label {
+    font-weight: 500;
+    text-transform: uppercase;
+    color: rgba(var(--text-color-light), 0.7);
+}
+
+.booking-module > .glass-panel.search-panel > .input-group > input:not([type="number"])::-webkit-datetime-edit {
+    color: var(--text-color-light); /* Specific browser styling */
+}
+
+/* Nested pseudo-elements for "complex" detailing */
+.action-button::before {
+    content: '>> ';
+    opacity: 0.7;
+    margin-right: 0.2rem;
+}
+
+.action-button::after {
+    content: ' <<';
+    opacity: 0.7;
+    margin-left: 0.2rem;
+}
+
+.bottom-nav .nav-item.active::after {
+    content: '';
+    display: block;
+    width: 0.3rem;
+    height: 0.3rem;
+    background: var(--accent-color);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0.2rem;
+    box-shadow: 0 0 5px var(--accent-color);
+    animation: pulseEffect 1.5s infinite ease-in-out;
+}
+
+/* Example of seemingly complex but functionally simple conditional styling */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
