@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>Website 1 - Index</title>
+    </head>
+    <body>
+        <header>
+            <h1>Welcome, <span style="color: limegreen;"><u>Operator.</u></span></h1>
+        </header>
+                <script>
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY) {
+                // Scrolling down
+                header.classList.add('hide');
+            } else {
+                // Scrolling up
+                header.classList.remove('hide');
+            }
+            lastScrollY = window.scrollY;
+        });
+        </script>
+    </body>
+    
+</html>
