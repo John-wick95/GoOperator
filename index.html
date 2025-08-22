@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
-        <title>Website 1 - Index</title>
-    </head>
-    <body>
-        <header>
-            <h1>Welcome, <span style="color: limegreen;"><u>Operator.</u></span></h1>
-        </header>
-                <script>
-        let lastScrollY = window.scrollY;
-        const header = document.querySelector('header');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > lastScrollY) {
-                // Scrolling down
-                header.classList.add('hide');
-            } else {
-                // Scrolling up
-                header.classList.remove('hide');
-            }
-            lastScrollY = window.scrollY;
-        });
-        </script>
-    </body>
-    
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Glass Sidebar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-gem"></i>
+            <h2>Liquid</h2>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li class="nav-item active">
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <h1>Welcome to the Liquid Glass Sidebar</h1>
+        <p>This is the main content area.</p>
+    </main>
+
+    <script src="script.js"></script>
+</body>
 </html>
