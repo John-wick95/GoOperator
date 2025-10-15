@@ -1,295 +1,376 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoOperator Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>GoOperator: The Vision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Tech Horizon -->
+    <!-- Application Structure Plan: The application is designed as a single-page experience with a sticky top navigation bar. This structure allows users to both scroll linearly through the vision and jump directly to key thematic sections (The Vision, Solution, Model, Edge, Roadmap), offering a more intuitive and non-linear exploration than a static document. The goal is to make the content feel like an interactive presentation rather than a simple text file. Key interactions include a clickable, dynamic timeline for the roadmap and visually distinct cards for the core concepts, which makes the strategic information more digestible and engaging. This architecture was chosen to elevate the vision from a flat document into an inspiring, interactive manifesto. -->
+    <!-- Visualization & Content Choices: Since the source report is conceptual without traditional datasets, standard charts are unsuitable. Instead, information is visualized through structure and interaction. Report Info: MVP Pillars -> Goal: Organize -> Viz/Presentation Method: Interactive Cards -> Interaction: Subtle hover effects -> Justification: Breaks down the product into digestible, visually appealing components. Report Info: Revenue Streams -> Goal: Compare -> Viz/Presentation Method: Diagrammatic 3-Column Layout with Icons (HTML/CSS) -> Interaction: None (Static Clarity) -> Justification: Clearly delineates the distinct business models for quick comprehension. Report Info: Roadmap Phases -> Goal: Show Change/Progression -> Viz/Presentation Method: Interactive Timeline (HTML/CSS/JS) -> Interaction: Click to reveal details -> Justification: Transforms a static table into a dynamic, forward-looking journey, allowing users to focus on one phase at a time. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        :root {
-            --color-darkest: #06141B;
-            --color-darker: #11212D;
-            --color-dark: #253745;
-            --color-medium: #4A5C6A;
-            --color-light: #9BA8AB;
-            --color-lighter: #CCD0CF;
-        }
-
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--color-darkest), var(--color-darker));
-            color: var(--color-lighter);
-            overflow: hidden;
-            position: relative;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
         }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            left: -20%;
-            width: 80%;
-            height: 80%;
-            background: rgba(74, 92, 106, 0.3); /* --color-medium with transparency */
-            border-radius: 50%;
-            filter: blur(150px);
-            animation: float1 15s infinite ease-in-out;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            right: -20%;
-            width: 70%;
-            height: 70%;
-            background: rgba(155, 168, 171, 0.2); /* --color-light with transparency */
-            border-radius: 50%;
-            filter: blur(120px);
-            animation: float2 18s infinite ease-in-out;
-            z-index: 0;
-        }
-
-        @keyframes float1 {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-            50% { transform: translate(30px, 40px) scale(1.05); opacity: 0.8; }
-            100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-        }
-
-        @keyframes float2 {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-            50% { transform: translate(-30px, -20px) scale(0.95); opacity: 0.7; }
-            100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-        }
-
-        .login-container {
-            position: relative;
-            z-index: 10;
-            background: rgba(6, 20, 27, 0.4); /* --color-darkest with transparency */
-            border-radius: 30px; /* More pronounced rounded corners */
-            border: 1px solid rgba(204, 208, 207, 0.1); /* Lighter border */
-            padding: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            width: 380px; /* Slightly wider */
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .login-container::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(204, 208, 207, 0.05), rgba(6, 20, 27, 0.05)); /* Subtle inner gradient */
-            border-radius: 30px;
-            z-index: -1;
-            transform: translateZ(-1px);
-        }
-
-        .liquid-blob {
-            position: absolute;
-            background: radial-gradient(circle at 30% 30%, rgba(74, 92, 106, 0.5), rgba(204, 208, 207, 0.1));
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.7;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            transform: translateZ(2px);
-            animation: liquidPulse 6s infinite alternate;
-        }
-
-        .liquid-blob.top-left {
-            width: 100px;
-            height: 100px;
-            top: -30px;
-            left: -30px;
-        }
-
-        .liquid-blob.bottom-right {
-            width: 120px;
-            height: 120px;
-            bottom: -40px;
-            right: -40px;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes liquidPulse {
-            0% { transform: scale(1) translateZ(2px); opacity: 0.7; }
-            50% { transform: scale(1.05) translateZ(2px); opacity: 0.8; }
-            100% { transform: scale(1) translateZ(2px); opacity: 0.7; }
-        }
-
-        h2 {
-            font-size: 2.5em;
+        .mantra {
             font-weight: 700;
+            font-size: 1.5rem;
             text-align: center;
-            color: var(--color-lighter);
-            margin-bottom: 30px;
-            letter-spacing: -0.05em; /* Tighter for Apple feel */
+            letter-spacing: -0.025em;
+            color: #0f172a; /* slate-900 */
         }
-
-        .input-group {
+        @media (min-width: 768px) {
+            .mantra {
+                font-size: 2rem;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #0369a1; /* sky-700 */
+            border-bottom-color: #0369a1; /* sky-700 */
+        }
+        .timeline-item {
             position: relative;
+            padding-bottom: 2rem;
+            padding-left: 2.5rem;
         }
-
-        .input-group label {
+        .timeline-item::before {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 20px;
-            transform: translateY(-50%);
-            color: var(--color-medium);
-            pointer-events: none;
-            transition: all 0.2s ease;
-            font-size: 1.1em;
-            font-weight: 400;
+            left: 0.4rem;
+            top: 0.5rem;
+            width: 2px;
+            height: 100%;
+            background-color: #cbd5e1; /* slate-300 */
         }
-
-        .input-group input {
-            width: calc(100% - 40px);
-            padding: 18px 20px;
-            background: rgba(17, 33, 45, 0.6); /* --color-darker with more transparency */
-            border: 1px solid rgba(74, 92, 106, 0.4); /* Subtle border */
-            border-radius: 15px; /* Softer rounded corners */
-            color: var(--color-lighter);
-            font-size: 1.1em;
-            font-weight: 600;
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            height: 1.25rem;
+            width: 1.25rem;
+            border-radius: 9999px;
+            border: 3px solid #f8fafc; /* slate-50 */
+            background-color: #cbd5e1; /* slate-300 */
             transition: all 0.3s ease;
-            -webkit-appearance: none; /* Remove default iOS styles */
-            -moz-appearance: none;
-            appearance: none;
-            backdrop-filter: blur(10px);
         }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--color-medium);
-            box-shadow: 0 0 0 4px rgba(74, 92, 106, 0.3); /* Focus ring */
-            background: rgba(17, 33, 45, 0.8);
+        .timeline-item.active .timeline-dot {
+            background-color: #0369a1; /* sky-700 */
+            transform: scale(1.1);
         }
-
-        .input-group input:focus + label,
-        .input-group input:not(:placeholder-shown) + label {
-            top: 8px;
-            left: 15px;
-            font-size: 0.8em;
-            color: var(--color-light);
-            background: linear-gradient(to right, rgba(17, 33, 45, 0.8), transparent);
-            padding: 0 5px;
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
             transform: translateY(0);
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--color-medium), var(--color-dark));
-            border: none;
-            border-radius: 15px;
-            color: var(--color-lighter);
-            font-size: 1.2em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            -webkit-appearance: none; /* Remove default iOS styles */
-            -moz-appearance: none;
-            appearance: none;
-        }
-
-        .login-button:hover {
-            background: linear-gradient(135deg, var(--color-light), var(--color-medium));
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .login-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .forgot-password {
-            text-align: center;
-            font-size: 0.9em;
-            color: var(--color-light);
-        }
-
-        .forgot-password a {
-            color: var(--color-light);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .forgot-password a:hover {
-            color: var(--color-lighter);
-        }
-
-        .signup-link {
-            text-align: center;
-            font-size: 0.9em;
-            color: var(--color-light);
-        }
-
-        .signup-link a {
-            color: var(--color-medium);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .signup-link a:hover {
-            color: var(--color-lighter);
         }
     </style>
 </head>
-<body>
-    <div class="login-container">
-        <div class="liquid-blob top-left"></div>
-        <div class="liquid-blob bottom-right"></div>
-        <h2>GoOperator</h2>
-        <form>
-            <div class="input-group">
-                <input type="text" id="username" placeholder=" " required>
-                <label for="username">Username or Email</label>
+<body class="antialiased">
+
+    <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-slate-900">GoOperator</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#vision" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700">The Vision</a>
+                        <a href="#solution" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700">The Solution</a>
+                        <a href="#model" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700">The Model</a>
+                        <a href="#edge" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700">Our Edge</a>
+                        <a href="#roadmap" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700">The Roadmap</a>
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder=" " required>
-                <label for="password">Password</label>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 md:py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tighter">
+                    The Vision: The First Step
+                </h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600">
+                    An interactive manifesto for the future of commercial freight, conceived October 2025.
+                </p>
+                <div class="mt-12">
+                    <div class="max-w-4xl mx-auto p-8 bg-slate-100 rounded-xl shadow-inner">
+                        <p class="mantra">
+                           We are the Operation; You're just the Operator.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="login-button">Sign In</button>
-            <div class="forgot-password">
-                <a href="#">Forgot Password?</a>
+        </section>
+
+        <!-- The Vision -->
+        <section id="vision" class="py-16 md:py-24 section-fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Problem & Our Mission</h2>
+                    <p class="mt-4 text-lg text-slate-600">This section outlines the core challenge in the American trucking industry and introduces the GoOperator mission to solve it. Our goal is to empower drivers by transforming their role through technology.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-semibold text-slate-800">The Industry Problem</h3>
+                        <p class="mt-4 text-slate-600">
+                            The American trucking industry is fragmented, inefficient, and presents high barriers for aspiring owner-operators. Drivers are burdened with the complex roles of business manager, dispatcher, and accountant, leading to eroded profitability, burnout, and a persistent driver shortage. Shippers, in turn, face inconsistent reliability.
+                        </p>
+                    </div>
+                    <div class="bg-sky-700 text-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold">Our Mission</h3>
+                        <p class="mt-4 opacity-90">
+                            To revolutionize commercial freight by eliminating operational headaches. We transform the driver's role from a burdened business owner into an efficient, highly-paid, supervisory **Operator**, making the career modern, profitable, and appealing to a new generation of talent.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="signup-link">
-                Don't have an account? <a href="#">Sign Up</a>
+        </section>
+
+        <!-- The Solution -->
+        <section id="solution" class="py-16 md:py-24 bg-white section-fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The GoOperator Solution</h2>
+                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">The core of our vision is the Digital Hub—an iOS-first software platform that acts as the central nervous system for our network. Below are the four pillars of our Minimum Viable Product (MVP), designed to maximize profit and efficiency from day one.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- MVP Pillar 1 -->
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <h3 class="font-bold text-lg text-sky-800">Automated Load Chaining & Profit Projection</h3>
+                        <p class="mt-2 text-sm text-slate-600">Instantly sources and chains together head-hauls and back-hauls to eliminate deadhead miles. Critically, it shows the **guaranteed net profit** for the entire route *before* the key is turned.</p>
+                    </div>
+                    <!-- MVP Pillar 2 -->
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <h3 class="font-bold text-lg text-sky-800">Digital Compliance & Documentation</h3>
+                        <p class="mt-2 text-sm text-slate-600">Seamless ELD (Hours of Service) integration. Uses the iOS device for one-click document capture (BOLs) and automated, instant invoice generation and submission.</p>
+                    </div>
+                    <!-- MVP Pillar 3 -->
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <h3 class="font-bold text-lg text-sky-800">Instant Payouts</h3>
+                        <p class="mt-2 text-sm text-slate-600">Initiates the payment process immediately upon digital Proof of Delivery (POD) acceptance, ensuring best-in-class cash flow for the operator.</p>
+                    </div>
+                    <!-- MVP Pillar 4 -->
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <h3 class="font-bold text-lg text-sky-800">Tesla Semi Integration</h3>
+                        <p class="mt-2 text-sm text-slate-600">Route optimization designed for electric heavy-haul, factoring in real-time charging network availability and optimal battery usage.</p>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+        </section>
+
+        <!-- The Model -->
+        <section id="model" class="py-16 md:py-24 section-fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Hybrid Business Model</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">We are not a typical software company. We operate a Trucking-as-a-Service (TaaS) platform, a unique hybrid model that allows for exponential growth with low capital investment. This structure creates three powerful, distinct rivers of revenue.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Revenue Stream 1 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
+                        <div class="text-4xl text-sky-700">1</div>
+                        <h3 class="mt-4 text-xl font-bold text-slate-800">GoOperations Fleet</h3>
+                        <p class="mt-2 text-slate-600">Revenue from our owned, cutting-edge fleet (Tesla Semis). This fleet acts as our high-performance R&D lab, proving the system's ability to drive maximum profit and innovate rapidly.</p>
+                    </div>
+                    <!-- Revenue Stream 2 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
+                        <div class="text-4xl text-sky-700">2</div>
+                        <h3 class="mt-4 text-xl font-bold text-slate-800">"Powered by GoOperator"</h3>
+                        <p class="mt-2 text-slate-600">Revenue share from independent owner-operators who join our network. They plug their existing truck into our software, and we handle 100% of the back-office complexity.</p>
+                    </div>
+                    <!-- Revenue Stream 3 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
+                        <div class="text-4xl text-sky-700">3</div>
+                        <h3 class="mt-4 text-xl font-bold text-slate-800">Asset Rental Marketplace</h3>
+                        <p class="mt-2 text-slate-600">Connects idle truck owners with operators who want to drive but don't own a truck. This minimizes the barrier to entry and captures revenue from the asset-side of the market.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Edge -->
+        <section id="edge" class="py-16 md:py-24 bg-white section-fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Our Competitive Edge</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Our strategy is built on flexibility, trust, and the empowerment of our operators. These principles create a powerful advantage, positioning GoOperator as the premium carrier of choice for high-value freight.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-slate-50 p-8 rounded-lg border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800">The "Why Not?" Adoption</h3>
+                        <p class="mt-3 text-slate-600">We don't demand exclusivity. Operators can use GoOperator to supplement existing work from any load board. The superior profit and minimal hassle of our system will naturally make it their primary choice.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-lg border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800">Human Augmentation</h3>
+                        <p class="mt-3 text-slate-600">Our long-term goal isn't to eliminate drivers, but to **elevate them**. The software replaces the dispatcher and accountant. The operator evolves into an Elite Supervisor, focused on expert driving and customer service.</p>
+                    </div>
+                     <div class="bg-slate-50 p-8 rounded-lg border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800">The Trust Platform</h3>
+                        <p class="mt-3 text-slate-600">We unify technology with talent. Shippers trust GoOperator because we ensure a standardized, high-performance workflow across our entire network. <br><span class="italic font-semibold mt-2 block">We are many, but we are one.</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Roadmap -->
+        <section id="roadmap" class="py-16 md:py-24 section-fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Roadmap to Autonomy</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Our success is the blueprint for our evolution. This interactive timeline outlines the four key phases of our innovation path. Click on each phase to explore the goals and milestones that will guide us from a digital platform to the industry's most advanced carrier.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+                    <div id="timeline-nav" class="lg:col-span-1">
+                        <!-- Timeline navigation -->
+                        <div class="space-y-4">
+                            <button data-phase="1" class="timeline-item-btn text-left w-full p-4 rounded-lg transition-all duration-300">
+                                <span class="font-bold text-lg text-slate-700">Phase 1: Digital Mastery</span>
+                                <span class="block text-sm text-slate-500">Perfecting the operational platform.</span>
+                            </button>
+                            <button data-phase="2" class="timeline-item-btn text-left w-full p-4 rounded-lg transition-all duration-300">
+                                <span class="font-bold text-lg text-slate-700">Phase 2: Predictive Intelligence</span>
+                                <span class="block text-sm text-slate-500">Transforming management to self-governance.</span>
+                            </button>
+                             <button data-phase="3" class="timeline-item-btn text-left w-full p-4 rounded-lg transition-all duration-300">
+                                <span class="font-bold text-lg text-slate-700">Phase 3: Autonomy Integration</span>
+                                <span class="block text-sm text-slate-500">Becoming the command center for autonomous tech.</span>
+                            </button>
+                             <button data-phase="4" class="timeline-item-btn text-left w-full p-4 rounded-lg transition-all duration-300">
+                                <span class="font-bold text-lg text-slate-700">Phase 4: Exponential Growth</span>
+                                <span class="block text-sm text-slate-500">Becoming the most advanced carrier.</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="timeline-content" class="lg:col-span-2">
+                        <!-- Timeline content will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-slate-800 text-slate-400">
+            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+                <p class="mantra text-white">GoOperator: We are the Operation; You're just the Operator.</p>
+                <p class="mt-4 text-sm">&copy; 2025 GoOperator Vision. The Beginning of the Journey.</p>
+            </div>
+        </footer>
+
+    </main>
 
     <script>
-        // Basic JavaScript for input label animation (though CSS handles most of it)
-        document.querySelectorAll('.input-group input').forEach(input => {
-            input.addEventListener('focus', () => {
-                input.parentNode.querySelector('label').classList.add('active');
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
             });
-            input.addEventListener('blur', () => {
-                if (input.value === '') {
-                    input.parentNode.querySelector('label').classList.remove('active');
+
+            const fader = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.section-fade-in').forEach(section => {
+                fader.observe(section);
+            });
+
+            const timelineData = {
+                '1': {
+                    title: 'Phase 1: Digital Mastery',
+                    goal: 'Perfecting the operational platform (MVP features).',
+                    milestone: 'Achieve industry-leading net profit margins across the network, proving the software\'s immediate financial value.'
+                },
+                '2': {
+                    title: 'Phase 2: Predictive Intelligence',
+                    goal: 'Transform the system from management to self-governance.',
+                    milestone: 'Launch a **Self-Dispatching System (ML-driven)**: The platform autonomously and dynamically books load chains and adjusts routes in real-time to maintain max profitability without human dispatcher intervention.'
+                },
+                '3': {
+                    title: 'Phase 3: Full Autonomy Integration',
+                    goal: 'Seamlessly transition the operational software into the command center for autonomous trucking technologies.',
+                    milestone: 'Implement a **Supervisory Driver Model**: The software directly manages the autonomous truck\'s route, schedule, and compliance, leaving the augmented operator to handle unforeseen circumstances and complex final-mile maneuvers.'
+                },
+                '4': {
+                    title: 'Phase 4: Exponential Fleet Growth',
+                    goal: 'Become the most profitable and technologically advanced carrier on the road.',
+                    milestone: 'Utilize the three-sided marketplace to rapidly acquire new assets (via rentals and independent operators) and scale without large capital expenditure, cementing our market leadership.'
+                }
+            };
+            
+            const timelineNav = document.getElementById('timeline-nav');
+            const timelineContent = document.getElementById('timeline-content');
+            const timelineButtons = document.querySelectorAll('.timeline-item-btn');
+
+            function updateTimelineContent(phase) {
+                const data = timelineData[phase];
+                timelineContent.innerHTML = `
+                    <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200 animate-fade-in">
+                        <h3 class="text-2xl font-bold text-sky-800">${data.title}</h3>
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-slate-700">Goal:</h4>
+                            <p class="mt-1 text-slate-600">${data.goal}</p>
+                        </div>
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-slate-700">Key Innovation Milestone:</h4>
+                            <p class="mt-1 text-slate-600">${data.milestone}</p>
+                        </div>
+                    </div>
+                `;
+                
+                timelineButtons.forEach(btn => {
+                    if (btn.dataset.phase === phase) {
+                        btn.classList.add('bg-sky-100', 'text-sky-800');
+                        btn.classList.remove('hover:bg-slate-100');
+                    } else {
+                        btn.classList.remove('bg-sky-100', 'text-sky-800');
+                        btn.classList.add('hover:bg-slate-100');
+                    }
+                });
+            }
+
+            timelineNav.addEventListener('click', (e) => {
+                const button = e.target.closest('.timeline-item-btn');
+                if (button) {
+                    const phase = button.dataset.phase;
+                    updateTimelineContent(phase);
                 }
             });
-            // Initial check for pre-filled values
-            if (input.value !== '') {
-                input.parentNode.querySelector('label').classList.add('active');
-            }
+
+            updateTimelineContent('1');
         });
     </script>
 </body>
