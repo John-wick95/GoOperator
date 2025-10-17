@@ -8,10 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Tech Horizon -->
-    <!-- Application Structure Plan: The application is designed as a single-page experience with a sticky top navigation bar. This structure allows users to both scroll linearly through the vision and jump directly to key thematic sections (The Vision, Solution, Model, Edge, Roadmap), offering a more intuitive and non-linear exploration than a static document. The goal is to make the content feel like an interactive presentation rather than a simple text file. Key interactions include a clickable, dynamic timeline for the roadmap and visually distinct cards for the core concepts, which makes the strategic information more digestible and engaging. This architecture was chosen to elevate the vision from a flat document into an inspiring, interactive manifesto. -->
-    <!-- Visualization & Content Choices: Since the source report is conceptual without traditional datasets, standard charts are unsuitable. Instead, information is visualized through structure and interaction. Report Info: MVP Pillars -> Goal: Organize -> Viz/Presentation Method: Interactive Cards -> Interaction: Subtle hover effects -> Justification: Breaks down the product into digestible, visually appealing components. Report Info: Revenue Streams -> Goal: Compare -> Viz/Presentation Method: Diagrammatic 3-Column Layout with Icons (HTML/CSS) -> Interaction: None (Static Clarity) -> Justification: Clearly delineates the distinct business models for quick comprehension. Report Info: Roadmap Phases -> Goal: Show Change/Progression -> Viz/Presentation Method: Interactive Timeline (HTML/CSS/JS) -> Interaction: Click to reveal details -> Justification: Transforms a static table into a dynamic, forward-looking journey, allowing users to focus on one phase at a time. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -35,8 +31,8 @@
             border-bottom: 2px solid transparent;
         }
         .nav-link.active, .nav-link:hover {
-            color: #0369a1; /* sky-700 */
-            border-bottom-color: #0369a1; /* sky-700 */
+            color: #00ff00; /* lime */
+            border-bottom-color: #00ff00; /* lime */
         }
         .timeline-item {
             position: relative;
@@ -67,7 +63,7 @@
             transition: all 0.3s ease;
         }
         .timeline-item.active .timeline-dot {
-            background-color: #0369a1; /* sky-700 */
+            background-color: #00ff00; /* lime */
             transform: scale(1.1);
         }
         .section-fade-in {
@@ -79,6 +75,34 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* New styles for the hero background */
+        .hero-background {
+            background-image: url('tesla-prasentiert-semi-e-lkw-auf-der-iaa-transportation-2024-379828.webp'); /* Make sure this path is correct */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+            z-index: 0; /* Ensure overlay and content are on top */
+        }
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2; /* Ensure content is above the overlay */
+            color: white; /* Ensure text is white for contrast */
+        }
+        .hero-content .mantra {
+            color: white; /* Keep mantra white */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -87,7 +111,7 @@
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <span class="font-bold text-xl text-slate-900"><b style="color: lime;">Go</b>Operator</span>
+                    <span class="font-bold text-xl text-slate-900"><b style="color: #00ff00;">Go</b>Operator</span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
@@ -103,17 +127,16 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="py-20 md:py-32 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tighter">
+        <section class="py-20 md:py-32 hero-background">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center hero-content">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter">
                     The Vision: The First Step
                 </h1>
-                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600">
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl">
                     An interactive manifesto for the future of commercial freight, conceived October 2025.
                 </p>
                 <div class="mt-12">
-                    <div class="max-w-4xl mx-auto p-8 bg-slate-100 rounded-xl shadow-inner">
+                    <div class="max-w-4xl mx-auto p-8 rounded-xl shadow-inner bg-black/50">
                         <p class="mantra">
                            We are the Operation; You're just the Operator.
                         </p>
@@ -122,7 +145,6 @@
             </div>
         </section>
 
-        <!-- The Vision -->
         <section id="vision" class="py-16 md:py-24 section-fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -136,8 +158,8 @@
                             The American trucking industry is fragmented, inefficient, and presents high barriers for aspiring owner-operators. Drivers are burdened with the complex roles of business manager, dispatcher, and accountant, leading to eroded profitability, burnout, and a persistent driver shortage. Shippers, in turn, face inconsistent reliability.
                         </p>
                     </div>
-                    <div class="bg-sky-700 text-white p-8 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-semibold">Our Mission</h3>
+                    <div class="bg-slate-800 text-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-[#00ff00]">Our Mission</h3>
                         <p class="mt-4 opacity-90">
                             To revolutionize commercial freight by eliminating operational headaches. We transform the driver's role from a burdened business owner into an efficient, highly-paid, supervisory **Operator**, making the career modern, profitable, and appealing to a new generation of talent.
                         </p>
@@ -146,7 +168,6 @@
             </div>
         </section>
 
-        <!-- The Solution -->
         <section id="solution" class="py-16 md:py-24 bg-white section-fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -154,31 +175,26 @@
                      <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">The core of our vision is the Digital Hub—an iOS-first software platform that acts as the central nervous system for our network. Below are the four pillars of our Minimum Viable Product (MVP), designed to maximize profit and efficiency from day one.</p>
                 </div>
                 <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- MVP Pillar 1 -->
                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <h3 class="font-bold text-lg text-sky-800">Automated Load Chaining & Profit Projection</h3>
+                        <h3 class="font-bold text-lg text-green-700">Automated Load Chaining & Profit Projection</h3>
                         <p class="mt-2 text-sm text-slate-600">Instantly sources and chains together head-hauls and back-hauls to eliminate deadhead miles. Critically, it shows the **guaranteed net profit** for the entire route *before* the key is turned.</p>
                     </div>
-                    <!-- MVP Pillar 2 -->
                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <h3 class="font-bold text-lg text-sky-800">Digital Compliance & Documentation</h3>
+                        <h3 class="font-bold text-lg text-green-700">Digital Compliance & Documentation</h3>
                         <p class="mt-2 text-sm text-slate-600">Seamless ELD (Hours of Service) integration. Uses the iOS device for one-click document capture (BOLs) and automated, instant invoice generation and submission.</p>
                     </div>
-                    <!-- MVP Pillar 3 -->
                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <h3 class="font-bold text-lg text-sky-800">Instant Payouts</h3>
+                        <h3 class="font-bold text-lg text-green-700">Instant Payouts</h3>
                         <p class="mt-2 text-sm text-slate-600">Initiates the payment process immediately upon digital Proof of Delivery (POD) acceptance, ensuring best-in-class cash flow for the operator.</p>
                     </div>
-                    <!-- MVP Pillar 4 -->
                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <h3 class="font-bold text-lg text-sky-800">Tesla Semi Integration</h3>
+                        <h3 class="font-bold text-lg text-green-700">Tesla Semi Integration</h3>
                         <p class="mt-2 text-sm text-slate-600">Route optimization designed for electric heavy-haul, factoring in real-time charging network availability and optimal battery usage.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- The Model -->
         <section id="model" class="py-16 md:py-24 section-fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -186,21 +202,18 @@
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">We are not a typical software company. We operate a Trucking-as-a-Service (TaaS) platform, a unique hybrid model that allows for exponential growth with low capital investment. This structure creates three powerful, distinct rivers of revenue.</p>
                 </div>
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <!-- Revenue Stream 1 -->
                     <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
-                        <div class="text-4xl text-sky-700">1</div>
+                        <div class="text-4xl text-green-700">1</div>
                         <h3 class="mt-4 text-xl font-bold text-slate-800">GoOperations Fleet</h3>
                         <p class="mt-2 text-slate-600">Revenue from our owned, cutting-edge fleet (Tesla Semis). This fleet acts as our high-performance R&D lab, proving the system's ability to drive maximum profit and innovate rapidly.</p>
                     </div>
-                    <!-- Revenue Stream 2 -->
                     <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
-                        <div class="text-4xl text-sky-700">2</div>
+                        <div class="text-4xl text-green-700">2</div>
                         <h3 class="mt-4 text-xl font-bold text-slate-800">"Powered by GoOperator"</h3>
                         <p class="mt-2 text-slate-600">Revenue share from independent owner-operators who join our network. They plug their existing truck into our software, and we handle 100% of the back-office complexity.</p>
                     </div>
-                    <!-- Revenue Stream 3 -->
                     <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
-                        <div class="text-4xl text-sky-700">3</div>
+                        <div class="text-4xl text-green-700">3</div>
                         <h3 class="mt-4 text-xl font-bold text-slate-800">Asset Rental Marketplace</h3>
                         <p class="mt-2 text-slate-600">Connects idle truck owners with operators who want to drive but don't own a truck. This minimizes the barrier to entry and captures revenue from the asset-side of the market.</p>
                     </div>
@@ -208,7 +221,6 @@
             </div>
         </section>
 
-        <!-- The Edge -->
         <section id="edge" class="py-16 md:py-24 bg-white section-fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -232,7 +244,6 @@
             </div>
         </section>
 
-        <!-- The Roadmap -->
         <section id="roadmap" class="py-16 md:py-24 section-fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -241,7 +252,6 @@
                 </div>
                 <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
                     <div id="timeline-nav" class="lg:col-span-1">
-                        <!-- Timeline navigation -->
                         <div class="space-y-4">
                             <button data-phase="1" class="timeline-item-btn text-left w-full p-4 rounded-lg transition-all duration-300">
                                 <span class="font-bold text-lg text-slate-700">Phase 1: Digital Mastery</span>
@@ -262,8 +272,7 @@
                         </div>
                     </div>
                     <div id="timeline-content" class="lg:col-span-2">
-                        <!-- Timeline content will be injected here -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </section>
@@ -339,7 +348,7 @@
                 const data = timelineData[phase];
                 timelineContent.innerHTML = `
                     <div class="bg-white p-8 rounded-lg shadow-lg border border-slate-200 animate-fade-in">
-                        <h3 class="text-2xl font-bold text-sky-800">${data.title}</h3>
+                        <h3 class="text-2xl font-bold text-green-700">${data.title}</h3>
                         <div class="mt-6">
                             <h4 class="font-semibold text-slate-700">Goal:</h4>
                             <p class="mt-1 text-slate-600">${data.goal}</p>
@@ -353,10 +362,10 @@
                 
                 timelineButtons.forEach(btn => {
                     if (btn.dataset.phase === phase) {
-                        btn.classList.add('bg-sky-100', 'text-sky-800');
+                        btn.classList.add('bg-green-100', 'text-green-800');
                         btn.classList.remove('hover:bg-slate-100');
                     } else {
-                        btn.classList.remove('bg-sky-100', 'text-sky-800');
+                        btn.classList.remove('bg-green-100', 'text-green-800');
                         btn.classList.add('hover:bg-slate-100');
                     }
                 });
